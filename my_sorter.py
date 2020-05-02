@@ -52,16 +52,17 @@ for track in track_list:
         mp3.set_version(mp3_tagger.VERSION_2)
         work_mp3_file = MusicInfo(mp3.song, mp3.artist, mp3.album)
 
-        if not mp3.song:
-            file_name = track
-        else:
-            file_name = f'{work_mp3_file.track} - {work_mp3_file.artist} - {work_mp3_file.album}.mp3'
-            rename(file_name, track, current_path)
-
         if not mp3.artist or not mp3.album:
-            print(f'Файл {file_name} не может быть перенесен, так как не имеет информации об артисте или альбоме')
-            pass
+            print(f'Файл {path} не может быть перенесен, так как не имеет информации об артисте или альбоме')
+            continue
         else:
+
+            if not mp3.song:
+                file_name = track
+            else:
+                file_name = f'{work_mp3_file.track} - {work_mp3_file.artist} - {work_mp3_file.album}.mp3'
+                rename(file_name, track, current_path)
+
             file_new_location = move_file(current_path, parse_arguments.dst_dir,
                                           work_mp3_file, file_name
                                           )
